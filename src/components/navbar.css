@@ -1,0 +1,180 @@
+/* Reset some default styling */
+* {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.navbar {
+    background-color: #A27707; /* Set navbar background color */
+    height: 13vh; /* Set responsive height for the navbar */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    font-size: 1.2rem; /* Set font size */
+    position: sticky; /* Make navbar sticky */
+    top: 0; /* Stick to the top of the page */
+    z-index: 999; /* Ensure navbar is on top */
+}
+
+.navbar-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out items evenly */
+    align-items: center; /* Center items vertically */
+    width: 100%; /* Full width */
+    max-width: 90vw; /* Responsive maximum width */
+    padding: 0 2vw; /* Responsive padding */
+}
+
+.navbar-logo {
+    color: #fff; /* Set logo color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    text-decoration: none; /* Remove underline from text */
+    font-size: 2rem; /* Set font size */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    margin-top: 0.5rem; /* Move the logo down slightly */
+}
+
+.logo {
+    width: 15vw; /* Set responsive width for logo */
+    min-width: 100px; /* Ensure logo doesn't get too small */
+}
+
+.menu-icon {
+    display: none; /* Hide menu icon by default */
+    margin: 2vw; /* Add margin to the menu icon */
+    margin-top: 0.5rem; /* Align menu icon with the logo */
+}
+
+.nav-menu {
+    display: none; /* Hide nav menu in desktop view */
+    align-items: center; /* Center items vertically */
+    list-style: none; /* Remove default list styling */
+    text-align: center; /* Center text */
+}
+
+.nav-menu.active {
+    background: #191717; /* Set background color for active nav menu */
+    position: absolute; /* Absolute positioning */
+    top: 12vh; /* Set position below the navbar */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    height: calc(100vh - 12vh); /* Responsive height */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    transition: all 0.5s ease; /* Smooth transition */
+}
+
+.nav-item {
+    height: 8vh; /* Set responsive height for nav items */
+}
+
+.nav-links {
+    color: #fff; /* Set link color */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    text-decoration: none; /* Remove underline from text */
+    padding: 0 1vw; /* Responsive padding */
+    height: 100%; /* Full height */
+}
+
+.nav-links:hover {
+    background-color: #fff; /* Change background color on hover */
+    color: #A27707; /* Change text color on hover */
+    border-radius: 4px; /* Add rounded corners */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.user-icon {
+    color: #fff; /* Set user icon color */
+    font-size: 1.5rem; /* Set user icon size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    margin-right: 1rem; /* Add space between the icon and the logout button */
+}
+
+/* Button styles */
+.btn--outline {
+    background-color: transparent; /* Transparent background */
+    border: 0.2vh solid #fff; /* Responsive white border */
+    color: #fff; /* Set text color */
+    padding: 0.8vh 2vw; /* Responsive padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.navbar-buttons {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    margin-top: 0.5rem; /* Move the buttons down slightly */
+}
+
+.navbar-buttons .btn--outline + .btn--outline {
+    margin-left: 1vw; /* Add gap between the two buttons */
+}
+
+.btn--outline:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+.btn--outline:hover {
+    background-color: #fff; /* Change background color on hover */
+    color: #A27707; /* Change text color on hover */
+}
+
+/* Media Queries */
+@media screen and (max-width: 960px) {
+    .navbar-container {
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-between; /* Space out items evenly */
+    }
+
+    .menu-icon {
+        display: block; /* Show menu icon */
+        color: #fff; /* Set icon color */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        font-size: 1.35rem; /* Set icon size */
+        margin-top: 2rem; /* Align menu icon with the logo */
+    }
+
+    .nav-menu {
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Stack items vertically */
+        width: 100%; /* Full width */
+        height: calc(100vh - 12vh); /* Responsive height */
+        position: absolute; /* Absolute positioning */
+        top: 12vh; /* Set position below the navbar */
+        left: -100%; /* Hide menu off-screen */
+        opacity: 1; /* Set opacity */
+        transition: all 0.5s ease; /* Smooth transition */
+    }
+
+    .nav-menu.active {
+        background: #191717; /* Set background color for active nav menu */
+        left: 0; /* Align to the left */
+        opacity: 1; /* Set opacity */
+        transition: all 0.5s ease; /* Smooth transition */
+        z-index: 1; /* Set z-index */
+    }
+
+    .nav-item {
+        width: 100%; /* Full width */
+    }
+
+    .nav-links {
+        text-align: center; /* Center text */
+        padding: 2rem; /* Add padding */
+        width: 100%; /* Full width */
+        display: table; /* Display as table */
+    }
+
+    .btn--outline {
+        display: none; /* Hide buttons in mobile view */
+    }
+
+    .user-icon {
+        display: block; /* Ensure user icon is visible in mobile view */
+        margin-right: 1rem; /* Add space between the icon and the logout button in mobile view */
+    }
+}

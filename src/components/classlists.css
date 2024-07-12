@@ -1,0 +1,80 @@
+.pList {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Ensures items wrap on smaller screens */
+    margin: 0 auto; /* Centers the container on the screen */
+  }
+  
+  .pListItem {
+    flex: 1 1 250px; /* Ensures items don't get too wide */
+    max-width: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s; /* Adds smooth transition effects */
+    margin: 10px; /* Add margin to prevent overlap */
+  }
+  
+  .pListItem:hover {
+    transform: scale(1.05); /* Slightly enlarges the item on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow effect on hover */
+  }
+  
+  .pListImg {
+    width: 100%;
+    height: 150px; /* Adjust height to ensure images are visible properly */
+    object-fit: cover;
+  }
+  
+  .pListTitles {
+    padding: 10px; /* Adds padding around the text */
+    background-color: #f9f9f9; /* Light background for text area */
+    text-align: center; /* Centers text */
+  }
+  
+  .pListTitles > h1,
+  .pListTitles > h2 {
+    color: #333; /* Dark color for better contrast */
+    margin: 5px 0; /* Adds space between titles */
+    transition: text-decoration 0.3s; /* Smooth transition for text decoration */
+    text-decoration: none; /* Remove the default underline */
+  }
+  
+  .pListLink {
+    text-decoration: none; /* Remove blue underlining */
+  }
+  
+  .pListLink:active .pListTitles > h1,
+  .pListLink:active .pListTitles > h2 {
+    text-decoration: underline; /* Underlines text when link is clicked */
+  }
+  
+  @media (max-width: 768px) {
+    .pList {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px; /* Ensure gap around each item */
+    }
+  
+    .pListItem {
+      width: 100%;
+      max-width: 90%;
+      margin: 20px 0; /* Ensure margin around each item */
+    }
+  
+    .pListImg {
+      height: 120px; /* Adjust height for smaller screens */
+    }
+  
+    .pListTitles > h1 {
+      font-size: 16px; /* Smaller font size for mobile */
+    }
+  
+    .pListTitles > h2 {
+      font-size: 12px; /* Smaller font size for mobile */
+    }
+  }
+  

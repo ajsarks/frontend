@@ -1,0 +1,320 @@
+.hotelContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.hotelWrapper {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.bookNow {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  border: none;
+  padding: 10px 20px;
+  background-color: #a27707; /* Gold color */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hotelTitle {
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.hotelAddress {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hotelImages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.hotelImgWrapper {
+  width: 100%;
+  flex: 1 1 calc(33% - 10px);
+  margin: 5px;
+  display: flex; /* Ensure the wrapper uses flexbox */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+.hotelImg {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the container */
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.hotelDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.hotelDetailsTexts {
+  flex: 3;
+  text-align: left; /* Align text to the left */
+}
+
+.hotelDesc {
+  font-size: 14px;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+.hotelDetailsPrice {
+  flex: 1;
+  background-color: #ebf3ff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.hotelDetailsPrice > h1 {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+}
+
+.hotelDetailsPrice > h2 {
+  font-weight: 300;
+  text-align: center;
+}
+
+.hotelDetailsPrice > button {
+  border: none;
+  padding: 10px 20px;
+  background-color: #a27707; /* Gold color */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+  list-style-type: none; /* Remove default bullets */
+  display: flex;
+  align-items: center;
+}
+
+ul li::before {
+  content: '•'; /* Custom bullet */
+  color: #a27707; /* Bullet color */
+  font-size: 20px; /* Bullet size */
+  margin-right: 10px;
+}
+
+ul li strong {
+  color: #a27707; /* Highlight color */
+}
+
+.slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sliderWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderImg {
+  width: 80%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.arrow {
+  margin: 20px;
+  font-size: 50px;
+  color: lightgray;
+  cursor: pointer;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80vw; /* Increased width */
+  height: 80vh; /* Increased height */
+  max-width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  animation: fadeIn 0.3s ease-in-out; /* Fade-in animation */
+}
+
+.modalContent h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333; /* Darker text color */
+}
+
+.modalContent label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #555; /* Slightly darker label color */
+}
+
+.modalContent input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s; /* Smooth border color change */
+}
+
+.modalContent input:focus {
+  border-color: #a27707; /* Highlight border on focus */
+  outline: none; /* Remove default outline */
+}
+
+.modalContent button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  background: #a27707;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth background color change */
+}
+
+.modalContent button:last-child {
+  background: #6c757d;
+}
+
+.modalContent button:hover {
+  background: #a27707; /* Darker blue on hover */
+}
+
+.modalContent button:last-child:hover {
+  background: #5a6268; /* Darker grey on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hotelWrapper {
+    padding: 0 10px;
+  }
+
+  .hotelImgWrapper {
+    flex: 1 1 calc(50% - 10px);
+  }
+
+  .hotelDetails {
+    flex-direction: column;
+  }
+
+  .bookNow {
+    top: 10px;
+    right: 10px;
+  }
+
+  .hotelDetailsPrice {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .hotelImgWrapper {
+    flex: 1 1 100%;
+  }
+
+  .hotelTitle {
+    font-size: 20px;
+  }
+
+  .hotelDesc {
+    font-size: 12px;
+  }
+
+  .hotelAddress {
+    font-size: 12px;
+  }
+
+  .hotelDetailsPrice > h1 {
+    font-size: 16px;
+  }
+
+  .sliderImg {
+    width: 90%;
+  }
+}

@@ -1,0 +1,99 @@
+/* General Footer Styles */
+.footer-container {
+    background-color: #A27707;
+    color: #fff;
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-links {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-link-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.footer-link-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items */
+    margin: 16px;
+    text-align: center; /* Center align text */
+    width: calc(100% / 3);
+    box-sizing: border-box;
+}
+
+.footer-link-items h2 {
+    margin-bottom: 16px;
+}
+
+.footer-link-items a {
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+}
+
+.footer-link-items a:hover {
+    color: #0467fb;
+    transition: color 0.3s ease-out;
+}
+
+/* Footer Bottom Section */
+.footer-bottom {
+    width: 100%;
+}
+
+.footer-bottom-wrap {
+    display: flex;
+    justify-content: center; /* Center align the entire row */
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto 0 auto;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto; /* Aligns logo to the left */
+}
+
+.footer-logo .logo {
+    width: 150px;
+    height: auto;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto; /* Aligns social icons to the right */
+}
+
+.social-icon-link {
+    color: #fff;
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+.social-icon-link:hover {
+    color: #0467fb;
+    transition: color 0.3s ease-out;
+}
+
+.website-rights {
+    color: #fff;
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 0 20px; /* Adds space on both sides for centering */
+}

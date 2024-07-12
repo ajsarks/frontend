@@ -1,0 +1,48 @@
+.featured {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    z-index: 1;
+    margin: 5px auto; /* Adjust this value to move the section up */
+  }
+  
+  .featuredItem {
+    position: relative;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 280px;
+    flex: 1 1 308px;
+    margin: 10px; /* Add margin to prevent overlap */
+  }
+  
+  .featuredImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .featuredTitles {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 1.5em; /* Increase font size */
+  }
+  
+  @media (max-width: 768px) {
+    .featured {
+      flex-direction: column;
+      align-items: center;
+      margin-top: -20px; /* Adjusted top margin for smaller screens */
+    }
+  
+    .featuredItem {
+      width: 100%;
+      max-width: 90%;
+      margin: 20px 0; /* Ensure margin around each item */
+    }
+  }
+  

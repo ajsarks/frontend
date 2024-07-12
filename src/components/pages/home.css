@@ -1,0 +1,26 @@
+.home-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .homeTitle, .home-title {
+    width: 1024px;
+    font-size: 32px; /* Increased font size */
+    margin-top: 20px; /* Default value for larger screens */
+    color: #A27707; /* Set color for all home titles */
+    font-weight: bold; /* Make the font bolder */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    .homeTitle, .home-title {
+      margin-top: 10px; /* Move further up on mobile devices */
+      width: 100%; /* Adjust width for better responsiveness */
+      font-size: 28px; /* Increased font size for better readability on mobile */
+      font-weight: bold; /* Ensure the font is bold on mobile as well */
+    }
+  }

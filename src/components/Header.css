@@ -1,0 +1,193 @@
+/* Reset some default styling */
+* {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 21.3rem;
+    background-color: #A27707;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 3rem;
+}
+
+.headerMessage {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+.headerBtn {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.625rem 1.25rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-top: 1.25rem;
+}
+
+.headerBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.headerTitle {
+    margin-top: 1.25rem;
+    font-size: 4rem;
+}
+
+.headerDesc {
+    margin-top: 0.6rem;
+    font-size: 1.35rem;
+}
+
+.headerBtnWrapper {
+    margin-top: 1.25rem;
+}
+
+.headerSearch {
+    margin-top: 1.25rem;
+    height: auto; /* Adjust height to fit content */
+    background-color: white;
+    border: 3px solid #febb02;
+    display: flex;
+    align-items: center;
+    padding: 0.625rem;
+    border-radius: 0.3125rem;
+    position: relative;
+    width: 100%;
+    max-width: 64rem;
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.headerSearch.searchClicked {
+    flex-direction: column; /* Stack items vertically when search is clicked */
+}
+
+.headerIcon {
+    color: lightgray;
+}
+
+.headerSearchItem {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex: 1;
+    width: 100%; /* Ensure full width */
+    margin-bottom: 0.625rem; /* Add spacing between items */
+}
+
+.headerSearchInput {
+    border: none;
+    outline: none;
+    padding: 0.3125rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.headerSearchInput::placeholder {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+.headerSearchButton {
+    background-color: #febb02;
+    color: #A27707;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    margin-left: 0.625rem;
+}
+
+.headerSearchButton:hover {
+    background-color: #febb02d9;
+}
+
+.datePickerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%; /* Ensure full width */
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+    .header {
+        padding-top: 2rem;
+    }
+
+    .headerTitle {
+        font-size: 3rem; /* Adjust font size for tablet view */
+    }
+
+    .headerBtn {
+        font-size: 0.875rem; /* Adjust button font size for tablet view */
+    }
+
+    .headerSearch {
+        max-width: 90%; /* Adjust max width for tablet view */
+    }
+
+    .headerDesc {
+        font-size: 1.1rem; /* Adjust description font size for tablet view */
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding-top: 1rem;
+        height: auto; /* Adjust height for mobile view */
+    }
+
+    .headerTitle {
+        font-size: 2rem; /* Adjust font size for mobile view */
+    }
+
+    .headerDesc {
+        font-size: 0.9rem; /* Adjust description font size for mobile view */
+    }
+
+    .headerBtn {
+        font-size: 0.75rem; /* Adjust button font size for mobile view */
+    }
+
+    .headerSearch {
+        padding: 0.625rem; /* Adjust padding for mobile view */
+        flex-direction: column; /* Stack items vertically on mobile */
+    }
+
+    .headerSearchItem {
+        flex-direction: column; /* Stack items vertically on mobile */
+        align-items: flex-start;
+    }
+
+    .headerSearchButton {
+        width: 100%; /* Full width button on mobile */
+        margin-left: 0;
+        margin-top: 0.625rem; /* Add spacing above button */
+    }
+
+    .datePickerContainer {
+        width: 100%; /* Ensure full width */
+        font-size: 0.75rem; /* Make date picker smaller on mobile */
+    }
+}

@@ -1,0 +1,92 @@
+import React, { useState, useEffect, useContext } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import DatePicker from "react-multi-date-picker";
+import "react-multi-date-picker/styles/colors/green.css";
+import Navbar from "../../navbar";
+import Header from "../../Header";
+import SearchItem from "../../searchItem";
+import useFetch from "../../../hooks/useFetch";
+import { SearchContext } from "../../../context/search";
+import "./list.css";
+
+const List = () => {
+    const { city, dates, dispatch } = useContext(SearchContext);
+    const [destination, setDestination] = useState(city || "");
+    const [date, setDate] = useState(dates || []);
+    const [isSearchClicked, setIsSearchClicked] = useState(false);
+    const [query, setQuery] = useState(`api/classes/searchByCity?city=${city}`);
+
+    const { data, loading, error, reFetch } = useFetch(query);
+
+    const handleSearch = () => {
+        setIsSearchClicked(true);
+        if (dispatch) {
+            dispatch({ type: "NEW_SEARCH", payload: { city: destination, dates: date } });
+        } else {
+            console.error('Dispatch function is not available');
+        }
+        setQuery(`api/classes/searchByCity?city=${destination}`);
+    };
+
+    useEffect(() => {
+        if (isSearchClicked) {
+            reFetch();
+        }
+    }, [isSearchClicked, reFetch]);
+
+    return (
+        <div>
+            <Navbar />
+            <Header type="list" showSearchBar={false} />
+            <div className="listContainer">
+                <div className="listWrapper">
+                    <div className={`headerSearch ${isSearchClicked ? 'searchClicked' : ''}`}>
+                        <div className="headerSearchItem">
+                            <FontAwesomeIcon icon={faSearch} className="headerIcon" />
+                            <input
+                                type="text"
+                                placeholder="City"
+                                className="headerSearchInput"
+                                value={destination}
+                                onChange={(e) => setDestination(e.target.value)}
+                            />
+                        </div>
+                        <div className="headerSearchItem">
+                            <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
+                            <div className="datePickerContainer">
+                                <DatePicker
+                                    multiple
+                                    value={date}
+                                    onChange={setDate}
+                                    className="headerSearchInput"
+                                    placeholder="Select Date(s)"
+                                    minDate={new Date()}
+                                />
+                            </div>
+                        </div>
+                        <button className="headerSearchButton" onClick={handleSearch} disabled={!destination || date.length === 0}>
+                            Search
+                        </button>
+                    </div>
+                    <div className="listResult">
+                        {loading ? "Loading..." : (
+                            <>
+                                {data.length === 0 ? (
+                                    <p>No results found</p>
+                                ) : (
+                                    data.map((item) => (
+                                        <SearchItem item={item} key={item._id} />
+                                    ))
+                                )}
+                            </>
+                        )}
+                        {error && <p>Error: {error.message}</p>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default List;
