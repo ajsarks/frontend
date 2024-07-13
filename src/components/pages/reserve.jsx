@@ -6,6 +6,8 @@ import { SearchContext } from '../../context/search';
 import Navbar from '../navbar';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+const apiurl = process.env.REACT_APP_API_URL;
+
 const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,8 +29,8 @@ const ReservationPage = () => {
     const fetchData = async () => {
       try {
         const [userResponse, classResponse] = await Promise.all([
-          axios.get(`/api/users/${user._id}`),
-          axios.get(`/api/classes/${classid}`)
+          axios.get(`${apiurl}/api/users/${user._id}`),
+          axios.get(`${apiurl}/api/classes/${classid}`)
         ]);
 
         setUserData(userResponse.data);

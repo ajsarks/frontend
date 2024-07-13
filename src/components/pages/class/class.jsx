@@ -14,6 +14,8 @@ import { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
 
+const apiurl = process.env.REACT_APP_API_URL;
+
 const Hotel = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Hotel = () => {
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data, loading, error } = useFetch(`/api/classes/${classid}`);
+  const { data, loading, error } = useFetch(`${apiurl}/api/classes/${classid}`);
   const { email } = useContext(AuthContext);  // Just use email from AuthContext
 
   const photos = data.photos ? data.photos.slice(0, 5) : [];

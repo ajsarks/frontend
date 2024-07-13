@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../navbar";
 import { AuthContext } from "../../context/auth";
-
+const apiurl = process.env.REACT_APP_API_URL;
 const Register = () => {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -28,9 +28,9 @@ const Register = () => {
       dispatch({ type: "REGISTER_FAILURE", payload: { message: "Passwords do not match" } });
       return;
     }
-    dispatch({ type: "REGISTER_START" });
+    dispatch({ type: "REGISTER_START" }); 
     try {
-      const res = await axios.post("/api/auth/register", credentials);
+      const res = await axios.post(`${apiurl}/api/auth/register`, credentials);
       dispatch({ type: "REGISTER_SUCCESS", payload: res.data.details });
       setRegisterSuccess(true); // Set registerSuccess to true
     } catch (err) {
@@ -41,7 +41,7 @@ const Register = () => {
 
   const handleGoogleSignUp = () => {
     setIsGoogleSignUp(true); // Set isGoogleSignUp to true
-    window.location.href = "https://backend-lqlp.onrender.com/api/auth/google"; // Ensure this points to your backend
+    window.location.href = `${apiurl}/api/auth/google`; // Ensure this points to your backend
   };
 
   useEffect(() => {

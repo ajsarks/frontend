@@ -2,7 +2,7 @@ import useFetch from "../hooks/useFetch";
 import "./featured.css";
 const apiurl = process.env.REACT_APP_API_URL;
 const Featured = () => {
-    const { data, loading, error } = useFetch("${apiurl}/api/classes/CountbyCity?city=Vancouver,Toronto,Calgary");
+    const { data, loading, error } = useFetch(`${apiurl}/api/classes/CountbyCity?city=Vancouver,Toronto,Calgary`);
 
     return (
         <div className="featured">
