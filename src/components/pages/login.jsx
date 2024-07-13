@@ -4,6 +4,8 @@ import axios from "axios";
 import Navbar from "../navbar";
 import { AuthContext } from "../../context/auth";
 
+const apiurl = process.env.REACT_APP_API_URL;
+
 const Login = () => {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -23,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/api/auth/login", credentials);
+      const res = await axios.post(`${apiurl}/api/auth/login`, credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details.email });
     } catch (err) {
       const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
@@ -32,7 +34,7 @@ const Login = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = "https://backend-lqlp.onrender.com/api/auth/google";
+    window.location.href = `${apiurl}/api/auth/google`;
   };
 
   useEffect(() => {

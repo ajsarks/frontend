@@ -10,15 +10,16 @@ import useFetch from "../../../hooks/useFetch";
 import { SearchContext } from "../../../context/search";
 import "./list.css";
 
+const apiurl = process.env.REACT_APP_API_URL;
+
 const List = () => {
     const { city, dates, dispatch } = useContext(SearchContext);
     const [destination, setDestination] = useState(city || "");
     const [date, setDate] = useState(dates || []);
     const [isSearchClicked, setIsSearchClicked] = useState(false);
-    const [query, setQuery] = useState(`api/classes/searchByCity?city=${city}`);
+    const [query, setQuery] = useState(`${apiurl}/api/classes/searchByCity?city=${city}`);
 
-    const { data, loading, error, reFetch } = useFetch(query);
-
+    const { data, loading, error, reFetch } = useFetch(query)
     const handleSearch = () => {
         setIsSearchClicked(true);
         if (dispatch) {
@@ -26,7 +27,7 @@ const List = () => {
         } else {
             console.error('Dispatch function is not available');
         }
-        setQuery(`api/classes/searchByCity?city=${destination}`);
+        setQuery(`${apiurl}/api/classes/searchByCity?city=${destination}`);
     };
 
     useEffect(() => {
@@ -72,12 +73,16 @@ const List = () => {
                     <div className="listResult">
                         {loading ? "Loading..." : (
                             <>
-                                {data.length === 0 ? (
+                                {Array.isArray(data) && data.length === 0 ? (
                                     <p>No results found</p>
                                 ) : (
-                                    data.map((item) => (
-                                        <SearchItem item={item} key={item._id} />
-                                    ))
+                                    Array.isArray(data) ? (
+                                        data.map((item) => (
+                                            <SearchItem item={item} key={item._id} />
+                                        ))
+                                    ) : (
+                                        <p>Unexpected data format</p>
+                                    )
                                 )}
                             </>
                         )}

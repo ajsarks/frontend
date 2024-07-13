@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../navbar';
-
+const apiurl = process.env.REACT_APP_API_URL;
 const ReviewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ReviewPage = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('/api/booking', reservationData);
+      await axios.post('${apiurl}/api/booking', reservationData);
       alert('Reservation submitted successfully!');
       navigate('/');
     } catch (error) {
