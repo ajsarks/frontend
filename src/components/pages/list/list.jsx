@@ -8,6 +8,7 @@ import Header from "../../Header";
 import SearchItem from "../../searchItem";
 import useFetch from "../../../hooks/useFetch";
 import { SearchContext } from "../../../context/search";
+import { useLocation } from "react-router-dom";
 import "./list.css";
 
 const apiurl = process.env.REACT_APP_API_URL;
@@ -16,10 +17,25 @@ const List = () => {
     const { city, dates, dispatch } = useContext(SearchContext);
     const [destination, setDestination] = useState(city || "");
     const [date, setDate] = useState(dates || []);
+    const [type, setType] = useState(""); // New state for type filter
     const [isSearchClicked, setIsSearchClicked] = useState(false);
-    const [query, setQuery] = useState(`${apiurl}/api/classes/searchByCity?city=${city}`);
+    const location = useLocation();
 
-    const { data, loading, error, reFetch } = useFetch(query)
+    const [query, setQuery] = useState("");
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const typeParam = params.get("type");
+        if (typeParam) {
+            setType(typeParam);
+            setQuery(`${apiurl}/api/classes/searchByType?type=${typeParam}`);
+        } else {
+            setQuery(`${apiurl}/api/classes/searchByCity?city=${destination}`);
+        }
+    }, [location.search, destination]);
+
+    const { data, loading, error, reFetch } = useFetch(query);
+
     const handleSearch = () => {
         setIsSearchClicked(true);
         if (dispatch) {

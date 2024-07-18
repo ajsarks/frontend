@@ -1,23 +1,24 @@
 .pList {
   width: 100%;
-  max-width: 1024px;
+  max-width: 1400px; /* Increase the max width for a wider layout */
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 30px; /* Increase the gap between cards */
   flex-wrap: wrap; /* Ensures items wrap on smaller screens */
   margin: 20px auto; /* Centers the container on the screen */
   padding: 0 20px; /* Adds padding around the container */
 }
 
 .pListItem {
-  flex: 1 1 250px; /* Ensures items don't get too wide */
-  max-width: 250px;
+  flex: 1 1 350px; /* Increase the width of each item */
+  max-width: 350px; /* Increase the max width of each item */
   border-radius: 15px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adds smooth transition effects */
   margin: 10px; /* Add margin to prevent overlap */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Initial shadow effect */
+  background-color: #fff; /* Add background color */
 }
 
 .pListItem:hover {
@@ -27,7 +28,7 @@
 
 .pListImg {
   width: 100%;
-  height: 150px; /* Adjust height to ensure images are visible properly */
+  height: 200px; /* Increase height to ensure images are more visible */
   object-fit: cover;
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
@@ -37,7 +38,7 @@
 }
 
 .pListTitles {
-  padding: 15px; /* Adds padding around the text */
+  padding: 20px; /* Increase padding around the text */
   background-color: #f9f9f9; /* Light background for text area */
   text-align: center; /* Centers text */
   transition: background-color 0.3s ease; /* Smooth transition for background color */
@@ -50,7 +51,7 @@
 .pListTitles > h1,
 .pListTitles > h2 {
   color: #333; /* Dark color for better contrast */
-  margin: 5px 0; /* Adds space between titles */
+  margin: 10px 0; /* Adds space between titles */
   transition: text-decoration 0.3s, color 0.3s; /* Smooth transition for text decoration and color */
   text-decoration: none; /* Remove the default underline */
 }
@@ -83,14 +84,14 @@
   }
 
   .pListImg {
-    height: 120px; /* Adjust height for smaller screens */
+    height: 150px; /* Adjust height for smaller screens */
   }
 
   .pListTitles > h1 {
-    font-size: 16px; /* Smaller font size for mobile */
+    font-size: 18px; /* Adjust font size for mobile */
   }
 
   .pListTitles > h2 {
-    font-size: 12px; /* Smaller font size for mobile */
+    font-size: 14px; /* Adjust font size for mobile */
   }
 }

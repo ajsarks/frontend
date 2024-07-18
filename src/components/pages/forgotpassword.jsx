@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../navbar";
 
+const apiurl = process.env.REACT_APP_API_URL;
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -15,7 +17,7 @@ const ForgotPassword = () => {
         e.preventDefault();
         try {
             console.log("Sending request with email:", email);
-            const response = await axios.post("/api/auth//forgot-password", { email });
+            const response = await axios.post(`${apiurl}/api/auth/forgot-password`, { email });
             console.log("Password reset email sent:", response.data);
             navigate("/");  // Redirect on successful request
         } catch (error) {
