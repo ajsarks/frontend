@@ -1,0 +1,63 @@
+/* Reset some default styling */
+* {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.sidebar {
+    width: 8vw; /* Set responsive width for sidebar */
+    min-width: 100px; /* Ensure sidebar doesn't get too small */
+    background-color: #34495e; /* Set sidebar background color */
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed positioning */
+    top: 13vh; /* Adjust according to your navbar height */
+    left: 0; /* Align to the left */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    padding-top: 2rem; /* Add padding at the top */
+    z-index: 999; /* Ensure sidebar is on top */
+}
+
+.sidebar ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    width: 100%; /* Full width */
+}
+
+.sidebar ul li {
+    width: 100%; /* Full width */
+    text-align: center; /* Center text */
+    padding: 0.5rem 0; /* Adjust padding */
+}
+
+.sidebar ul li a {
+    text-decoration: none; /* Remove underline from text */
+    color: #fff; /* Set link color */
+    display: block; /* Display as block */
+    width: 100%; /* Full width */
+    padding: 0.5rem; /* Adjust padding */
+}
+
+.sidebar ul li a:hover {
+    background-color: #fff; /* Change background color on hover */
+    color: #34495e; /* Change text color on hover */
+    border-radius: 4px; /* Add rounded corners */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Media Queries */
+@media screen and (max-width: 960px) {
+    .sidebar {
+        width: 100%; /* Full width */
+        height: calc(100vh - 13vh); /* Responsive height */
+        top: 13vh; /* Adjust according to your navbar height */
+        left: -100%; /* Hide sidebar off-screen */
+        transition: transform 0.3s ease-in-out; /* Smooth transition */
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Show sidebar */
+    }
+}
