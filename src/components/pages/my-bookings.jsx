@@ -2,13 +2,15 @@ import React, { useEffect, useState, useContext } from 'react';
 import Navbar from '../navbar';
 import Sidebar from '../sidebar/sidebar';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import { AuthContext } from "../../context/auth";
 import './mybooking.css'; // Ensure this path is correct
 
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
-  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const { user } = location.state || {}; // Ensure state is handled correctly
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
