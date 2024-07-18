@@ -41,8 +41,9 @@ const Login = () => {
     if (email) {
       setLoginSuccess(true);
       const from = location.state?.from?.pathname || "/";
+      const redirectTo = from === "/register" ? "/" : from; // Redirect to home if coming from register
       setTimeout(() => {
-        navigate(from);
+        navigate(redirectTo);
       }, 1000);
     }
   }, [email, navigate, location.state]);
