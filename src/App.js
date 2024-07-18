@@ -12,6 +12,8 @@ import GoogleAuthSuccess from './components/googleauthsucees';
 import { SearchContextProvider } from './context/search';
 import ReservePage from './components/pages/reserve';
 import ReviewPage from './components/pages/reviewselections';
+import MyBookings from './components/pages/my-bookings';
+import MyAccount from './components/pages/myaccount';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path='/auth/google/success' element={<GoogleAuthSuccess />} />
             <Route path='/reserve' element={<ReservePage />} />
             <Route path='/review' element={<ReviewPage />} />
+            <Route path='/my-bookings' element={<MyBookings />} /> {/* Added route */}
+            <Route path='/my-account' element={<MyAccount />} /> {/* Added route */}
           </Routes>
         </div>
       </Router>

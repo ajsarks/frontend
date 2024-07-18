@@ -46,7 +46,9 @@ function Navbar() {
                     {email ? (
                         <>
                             <li className='nav-item'>
-                                <FaUser className="user-icon" />
+                                <Link to='/my-bookings' className="nav-links" onClick={closeMobileMenu}>
+                                    <FaUser className="user-icon" />
+                                </Link>
                             </li>
                             <li className='nav-item'>
                                 <button className="nav-links" onClick={handleLogout}>
@@ -73,7 +75,9 @@ function Navbar() {
                     <div className="navbar-buttons">
                         {email ? (
                             <>
-                                <FaUser className="user-icon" />
+                                <Link to='/my-bookings' className="nav-links">
+                                    <FaUser className="user-icon" />
+                                </Link>
                                 <Button onClick={handleLogout} buttonStyle='btn--outline' padding='1.2vh 4vh' fontSize='2vh'>
                                     Logout
                                 </Button>
