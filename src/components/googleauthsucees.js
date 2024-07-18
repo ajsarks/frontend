@@ -7,14 +7,19 @@ const GoogleAuthSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const user = JSON.parse(query.get('user'));
+    try {
+      const query = new URLSearchParams(window.location.search);
+      const user = JSON.parse(query.get('user'));
 
-    if (user) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-      navigate('/');
-    } else {
-      navigate('/login');
+      if (user) {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        navigate('/');
+      } else {
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error during Google Auth Success:', error);
+      navigate('https://frontend-chi-swart-59.vercel.app/login');
     }
   }, [dispatch, navigate]);
 
