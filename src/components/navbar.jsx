@@ -15,6 +15,7 @@ function Navbar() {
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' });
         closeMobileMenu();
+        navigate('/');
     };
 
     useEffect(() => {
