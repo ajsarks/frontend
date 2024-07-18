@@ -2,8 +2,7 @@
     width: 100%;
     max-width: 1024px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
     z-index: 1;
     margin: 50px auto;
@@ -14,8 +13,8 @@
     color: white;
     border-radius: 10px;
     overflow: hidden;
-    height: 280px;
-    flex: 1 1 308px;
+    height: 250px;
+    flex: 1;
     margin: 10px; /* Add margin to prevent overlap */
   }
   
@@ -44,4 +43,3 @@
       margin: 20px 0; /* Ensure margin around each item */
     }
   }
-  
