@@ -16,7 +16,7 @@ const ReviewPage = () => {
     const fetchClassName = async () => {
       try {
         const response = await axios.get(`${apiurl}/api/classes/${reservationData.classid}`);
-        setClassName(response.data.className);
+        setClassName(response.data.name);
       } catch (err) {
         console.error('Error fetching class name:', err);
         setError('Error fetching class name. Please try again.');
