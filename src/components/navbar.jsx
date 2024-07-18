@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Ensure useNavigate is imported
 import './navbar.css';
 import { Button } from './button';
 import { AuthContext } from '../context/auth';
@@ -11,11 +11,12 @@ function Navbar() {
     const closeMobileMenu = () => setClick(false);
     const [button, setButton] = useState(true);
     const { email, dispatch } = useContext(AuthContext); // Access the email and dispatch from AuthContext
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' });
         closeMobileMenu();
-        navigate('/');
+        navigate('/'); // Navigate to home on logout
     };
 
     useEffect(() => {
