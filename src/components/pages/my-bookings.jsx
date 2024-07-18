@@ -12,15 +12,13 @@ function MyBookings() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      axios.get(`${apiurl}/api/booking/user/${user._id}`)
-        .then(response => {
-          setBookings(response.data);
-        })
-        .catch(error => {
-          console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
-        });
-    }
+    axios.get(`${apiurl}/api/booking/user/${user._id}`)
+      .then(response => {
+        setBookings(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
+      });
   }, [user]);
 
   const currentDate = new Date();
