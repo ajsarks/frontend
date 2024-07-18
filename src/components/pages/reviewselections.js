@@ -1,63 +1,142 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../navbar';
 const apiurl = process.env.REACT_APP_API_URL;
-const ReviewPage = () => {
+
+const ReservePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const reservationData = location.state;
-  const [error, setError] = React.useState('');
+  const existingData = location.state;
 
-  const handleSubmit = async () => {
+  const [reservationData, setReservationData] = useState({
+    name: existingData?.name || '',
+    email: existingData?.email || '',
+    phonenumber: existingData?.phonenumber || '',
+    classsetting: existingData?.classsetting || '',
+    location: existingData?.location || '',
+    time: existingData?.time || '',
+    date: existingData?.date || [],
+    additionalcomments: existingData?.additionalcomments || ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReservationData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDateChange = (dates) => {
+    setReservationData((prev) => ({ ...prev, date: dates }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await axios.post(`${apiurl}/api/booking`, reservationData); // Corrected template literal
+      await axios.post(`${apiurl}/api/booking`, reservationData);
       alert('Reservation submitted successfully!');
       navigate('/');
     } catch (error) {
       console.error('Error submitting reservation:', error);
-      setError('Your selected dates are unavailable. Please try again.');
+      alert('There was an error submitting your reservation. Please try again.');
     }
-  };
-
-  const handleEdit = () => {
-    navigate(-1);
   };
 
   return (
     <div>
       <Navbar />
       <div style={styles.container}>
-        <h2 style={styles.title}>Review Your Reservation</h2>
-        <div style={styles.reviewItem}>
-          <strong>Name:</strong> {reservationData.name}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Email:</strong> {reservationData.email}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Phone Number:</strong> {reservationData.phonenumber}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Class Setting:</strong> {reservationData.classsetting}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Location:</strong> {reservationData.location}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Time:</strong> {reservationData.time}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Dates:</strong> {reservationData.date.join(', ')}
-        </div>
-        <div style={styles.reviewItem}>
-          <strong>Comments:</strong> {reservationData.additionalcomments}
-        </div>
-        {error && <p style={styles.error}>{error}</p>}
-        <div style={styles.buttons}>
-          <button onClick={handleSubmit} style={styles.button}>Submit</button>
-          <button onClick={handleEdit} style={styles.button}>Edit</button>
-        </div>
+        <h2 style={styles.title}>Make a Reservation</h2>
+        <form onSubmit={handleSubmit}>
+          <div style={styles.formItem}>
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={reservationData.name}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={reservationData.email}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="phonenumber">Phone Number:</label>
+            <input
+              type="text"
+              id="phonenumber"
+              name="phonenumber"
+              value={reservationData.phonenumber}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="classsetting">Class Setting:</label>
+            <input
+              type="text"
+              id="classsetting"
+              name="classsetting"
+              value={reservationData.classsetting}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="location">Location:</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={reservationData.location}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="time">Time:</label>
+            <input
+              type="text"
+              id="time"
+              name="time"
+              value={reservationData.time}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="date">Dates:</label>
+            <input
+              type="text"
+              id="date"
+              name="date"
+              value={reservationData.date.join(', ')}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.formItem}>
+            <label htmlFor="additionalcomments">Comments:</label>
+            <input
+              type="text"
+              id="additionalcomments"
+              name="additionalcomments"
+              value={reservationData.additionalcomments}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <button type="submit" style={styles.button}>Submit</button>
+        </form>
       </div>
     </div>
   );
@@ -77,15 +156,15 @@ const styles = {
     marginBottom: '20px',
     color: '#333',
   },
-  reviewItem: {
+  formItem: {
     marginBottom: '15px',
-    fontSize: '18px',
-    color: '#555',
   },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '20px',
+  input: {
+    width: '100%',
+    padding: '10px',
+    fontSize: '16px',
+    borderRadius: '5px',
+    border: '1px solid #ddd',
   },
   button: {
     padding: '12px 24px',
@@ -96,10 +175,6 @@ const styles = {
     cursor: 'pointer',
     fontSize: '16px',
   },
-  error: {
-    color: 'red',
-    marginTop: '20px',
-  },
 };
 
-export default ReviewPage;
+export default ReservePage;
