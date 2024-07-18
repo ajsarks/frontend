@@ -15,7 +15,7 @@ const ReviewPage = () => {
   useEffect(() => {
     const fetchClassName = async () => {
       try {
-        const response = await axios.get(`${apiurl}/api/classes/${reservationData.classsetting}`);
+        const response = await axios.get(`${apiurl}/api/classes/${reservationData.classid}`);
         setClassName(response.data.className);
       } catch (err) {
         console.error('Error fetching class name:', err);
