@@ -11,20 +11,22 @@ const apiurl = process.env.REACT_APP_API_URL;
 const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { classid, user } = location.state;
+  const { classid, user } = location.state || {}; // Ensure state is handled correctly
   const { dates: contextDates } = useContext(SearchContext);
-  const [locationInput, setLocationInput] = useState('');
-  const [time, setTime] = useState('');
-  const [phonenumber, setPhoneNumber] = useState('');
-  const [additionalcomments, setComments] = useState('');
-  const [classsetting, setClassSetting] = useState('School');
-  const [selectedDates, setSelectedDates] = useState(contextDates || []);
+  const [locationInput, setLocationInput] = useState(location.state?.location || '');
+  const [time, setTime] = useState(location.state?.time || '');
+  const [phonenumber, setPhoneNumber] = useState(location.state?.phonenumber || '');
+  const [additionalcomments, setComments] = useState(location.state?.additionalcomments || '');
+  const [classsetting, setClassSetting] = useState(location.state?.classsetting || 'School');
+  const [selectedDates, setSelectedDates] = useState(contextDates || location.state?.date || []);
   const [maxDates, setMaxDates] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [userData, setUserData] = useState({ name: '', email: '' });
 
   useEffect(() => {
+    if (!classid || !user) return; // Ensure classid and user are available
+
     setLoading(true);
     const fetchData = async () => {
       try {
@@ -43,7 +45,7 @@ const ReservationPage = () => {
     };
 
     fetchData();
-  }, [classid, user._id]);
+  }, [classid, user]);
 
   const handleDateChange = (dates) => {
     if (dates.length <= maxDates) {

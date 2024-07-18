@@ -11,26 +11,28 @@ const ReviewPage = () => {
   const reservationData = location.state;
   const [error, setError] = useState('');
   const [className, setClassName] = useState('');
+  const [classSetting, setClassSetting] = useState(''); // New state for class setting
 
   useEffect(() => {
-    const fetchClassName = async () => {
+    const fetchClassDetails = async () => {
       try {
         const response = await axios.get(`${apiurl}/api/classes/${reservationData.classid}`);
         setClassName(response.data.name);
+        setClassSetting(response.data.setting); // Fetch and set class setting
       } catch (err) {
-        console.error('Error fetching class name:', err);
-        setError('Error fetching class name. Please try again.');
+        console.error('Error fetching class details:', err);
+        setError('Error fetching class details. Please try again.');
       }
     };
 
     if (reservationData.classsetting) {
-      fetchClassName();
+      fetchClassDetails();
     }
   }, [reservationData.classsetting]);
 
   const handleSubmit = async () => {
     try {
-      await axios.post(`${apiurl}/api/booking`, reservationData); // Corrected template literal
+      await axios.post(`${apiurl}/api/booking`, reservationData);
       alert('Reservation submitted successfully!');
       navigate('/');
     } catch (error) {
@@ -60,6 +62,9 @@ const ReviewPage = () => {
         </div>
         <div style={styles.reviewItem}>
           <strong>Class:</strong> {className || 'Loading...'}
+        </div>
+        <div style={styles.reviewItem}>
+          <strong>Class Setting:</strong> {classSetting || 'Loading...'} {/* Display class setting */}
         </div>
         <div style={styles.reviewItem}>
           <strong>Location:</strong> {reservationData.location}
