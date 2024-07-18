@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../navbar";
 import { AuthContext } from "../../context/auth";
+
 const apiurl = process.env.REACT_APP_API_URL;
+
 const Register = () => {
   const [credentials, setCredentials] = useState({
     email: "",
