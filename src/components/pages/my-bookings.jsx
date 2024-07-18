@@ -4,14 +4,16 @@ import Sidebar from '../sidebar/sidebar';
 import axios from 'axios';
 import { AuthContext } from "../../context/auth";
 import './mybooking.css'; // Ensure this path is correct
+const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log('API URL:', apiurl); // Log the API URL
     if (user && user.id) {
-      axios.get(`/api/booking/user/${user.id}`)
+      axios.get(`${apiurl}/api/booking/user/${user.id}`)
         .then(response => {
           setBookings(response.data);
         })
@@ -66,7 +68,8 @@ function BookingCard({ booking }) {
   const [classInfo, setClassInfo] = useState(null);
 
   useEffect(() => {
-    axios.get(`/api/classes/${booking.classid}`)
+    console.log('Fetching class info for class ID:', booking.classid); // Log the class ID
+    axios.get(`${apiurl}/api/classes/${booking.classid}`)
       .then(response => {
         setClassInfo(response.data);
       })
