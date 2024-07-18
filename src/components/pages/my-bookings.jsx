@@ -4,6 +4,7 @@ import Sidebar from '../sidebar/sidebar';
 import axios from 'axios';
 import { AuthContext } from "../../context/auth";
 import './mybooking.css'; // Ensure this path is correct
+
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
@@ -11,16 +12,13 @@ function MyBookings() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log('API URL:', apiurl); // Log the API URL
-    if (user && user.id) {
-      axios.get(`${apiurl}/api/booking/user/${user.id}`)
-        .then(response => {
-          setBookings(response.data);
-        })
-        .catch(error => {
-          console.error('There was an error fetching the bookings!', error);
-        });
-    }
+    axios.get(`${apiurl}/api/booking/user/${user?.id}`)
+      .then(response => {
+        setBookings(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
+      });
   }, [user]);
 
   const currentDate = new Date();
@@ -68,13 +66,12 @@ function BookingCard({ booking }) {
   const [classInfo, setClassInfo] = useState(null);
 
   useEffect(() => {
-    console.log('Fetching class info for class ID:', booking.classid); // Log the class ID
     axios.get(`${apiurl}/api/classes/${booking.classid}`)
       .then(response => {
         setClassInfo(response.data);
       })
       .catch(error => {
-        console.error('There was an error fetching the class information!', error);
+        console.error('There was an error fetching the class information!', error.message, error.response ? error.response.data : null);
       });
   }, [booking.classid]);
 
