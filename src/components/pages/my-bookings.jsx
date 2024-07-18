@@ -8,17 +8,19 @@ import './mybooking.css'; // Ensure this path is correct
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
-  const [bookings, setBookings] = useState([]);
   const { user } = useContext(AuthContext);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    axios.get(`${apiurl}/api/booking/user/${user?.id}`)
-      .then(response => {
-        setBookings(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
-      });
+    if (user) {
+      axios.get(`${apiurl}/api/booking/user/${user._id}`)
+        .then(response => {
+          setBookings(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
+        });
+    }
   }, [user]);
 
   const currentDate = new Date();
