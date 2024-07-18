@@ -11,7 +11,7 @@ const ReviewPage = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('${apiurl}/api/booking', reservationData);
+      await axios.post(`${apiurl}/api/booking`, reservationData); // Corrected template literal
       alert('Reservation submitted successfully!');
       navigate('/');
     } catch (error) {
