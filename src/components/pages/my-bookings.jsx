@@ -35,7 +35,7 @@ function MyBookings() {
 
   return (
     <div className="my-bookings-page">
-      <Navbar />
+      <Navbar className="navbar"/>
       <div className="main-container">
         <Sidebar />
         <div className="content">
@@ -102,6 +102,7 @@ function BookingCard({ booking }) {
         <div className="booking-actions">
           <button className="cancel-button">Cancel Booking Request</button>
           <button className="contact-button">Contact Owner</button>
+          <button className="edit-button">Edit Booking</button>
         </div>
       </div>
     </div>
