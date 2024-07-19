@@ -47,7 +47,7 @@ const Hotel = () => {
 
   const handleClick = () => {
     if (email) {
-      navigate('/reserve', { state: { classid, user: email } });  // Pass email as user
+      navigate('/reserve', { state: { classid, user } });  // Pass email as user
     } else {
       navigate("/login", { state: { from: location } });
     }

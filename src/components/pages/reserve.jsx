@@ -25,10 +25,6 @@ const ReservationPage = () => {
   const [userData, setUserData] = useState({ name: '', email: '' });
 
   useEffect(() => {
-    if (!classid || !user) {
-      setError('Class ID or user information is missing.');
-      return;
-    }
 
     console.log('Fetching data for user:', user);
     setLoading(true);

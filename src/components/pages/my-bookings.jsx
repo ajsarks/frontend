@@ -10,7 +10,7 @@ import './mybooking.css'; // Ensure this path is correct
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
-  const { email: user } = useContext(AuthContext);  // Extract email and rename to user
+  const { user } = useContext(AuthContext);  // Use the entire user object from AuthContext
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
