@@ -120,18 +120,11 @@ function BookingCard({ booking, setBookings }) {
       <div className="booking-details">
         <h2>{classInfo.name}</h2>
         <p>{classInfo.oneLiner}</p>
-        <p>Description: {classInfo.description}</p>
         <p>City: {classInfo.city}</p>
-        <p>Type: {classInfo.type}</p>
-        <p>Days Required: {classInfo.daysrequired}</p>
-        <p>Price: {classInfo.price}</p>
-        <p>Location: {booking.location}</p>
         <p>Date: {new Date(booking.date[0]).toLocaleDateString()} - {new Date(booking.date[1]).toLocaleDateString()}</p>
-        <p>Time: {booking.time}</p>
         <p>Status: {getStatusIcon(booking.status)}</p>
-        <p>Additional Comments: {booking.additionalcomments}</p>
         <div className="booking-actions">
-          <button className="cancel-button" onClick={handleCancel}>Cancel Booking Request</button>
+          <button className="cancel-button" onClick={handleCancel}>Cancel Booking</button>
           <button className="contact-button">Contact Owner</button>
           <button className="edit-button">Edit Booking</button>
         </div>

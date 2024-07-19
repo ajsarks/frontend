@@ -25,8 +25,12 @@ const ReservationPage = () => {
   const [userData, setUserData] = useState({ name: '', email: '' });
 
   useEffect(() => {
-    if (!classid || !user) return; // Ensure classid and user are available
+    if (!classid || !user) {
+      setError('Class ID or user information is missing.');
+      return;
+    }
 
+    console.log('Fetching data for user:', user);
     setLoading(true);
     const fetchData = async () => {
       try {
@@ -38,6 +42,7 @@ const ReservationPage = () => {
         setUserData(userResponse.data);
         setMaxDates(classResponse.data.daysrequired);
       } catch (error) {
+        console.error('Failed to fetch data:', error);
         setError('Failed to fetch data.');
       } finally {
         setLoading(false);

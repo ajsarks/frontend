@@ -52,6 +52,12 @@ const List = () => {
         }
     }, [isSearchClicked, reFetch]);
 
+    useEffect(() => {
+        if (query) {
+            reFetch();
+        }
+    }, [query, reFetch]);
+
     return (
         <div>
             <Navbar />

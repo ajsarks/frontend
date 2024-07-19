@@ -64,7 +64,7 @@ const ReviewPage = () => {
           <strong>Class:</strong> {className || 'Loading...'}
         </div>
         <div style={styles.reviewItem}>
-          <strong>Class Setting:</strong> {classSetting || 'Loading...'} {/* Display class setting */}
+          <strong>Class Setting:</strong> {reservationData.classsetting || 'Loading...'}
         </div>
         <div style={styles.reviewItem}>
           <strong>Location:</strong> {reservationData.location}
