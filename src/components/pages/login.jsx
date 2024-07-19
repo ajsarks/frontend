@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (email) {
+    if (user) {
       setLoginSuccess(true);
       const from = location.state?.from?.pathname || "/";
       const redirectTo = from === "/register" ? "/" : from; // Redirect to home if coming from register
@@ -46,7 +46,7 @@ const Login = () => {
         navigate(redirectTo);
       }, 1000);
     }
-  }, [email, navigate, location.state]);
+  }, [user, navigate, location.state]);
 
   const googleButtonStyles = {
     transition: 'background-color .2s, box-shadow .3s',
