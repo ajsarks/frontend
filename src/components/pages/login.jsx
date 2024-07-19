@@ -49,7 +49,7 @@ const Login = () => {
   }, [email, navigate, location.state]);
 
   const googleButtonStyles = {
-    transition: 'background-color .3s, box-shadow .3s',
+    transition: 'background-color .2s, box-shadow .3s',
     padding: '12px 16px 12px 42px',
     border: 'none',
     borderRadius: '3px',
