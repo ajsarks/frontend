@@ -2,26 +2,26 @@ import React, { useEffect, useState, useContext } from 'react';
 import Navbar from '../navbar';
 import Sidebar from '../sidebar/sidebar';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 import { AuthContext } from "../../context/auth";
 import './mybooking.css'; // Ensure this path is correct
 
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
-  const location = useLocation();
-  const { user } = location.state || {}; // Ensure state is handled correctly
+  const { email } = useContext(AuthContext);  // Use email from AuthContext
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    axios.get(`${apiurl}/api/booking/user/${user._id}`)
+    if (!email) return; // Ensure email is available
+
+    axios.get(`${apiurl}/api/booking/user/${email}`)
       .then(response => {
         setBookings(response.data);
       })
       .catch(error => {
         console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
       });
-  }, [user]);
+  }, [email]);
 
   const currentDate = new Date();
 
