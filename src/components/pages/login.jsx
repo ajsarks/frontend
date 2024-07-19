@@ -152,7 +152,7 @@ const Login = () => {
                   cursor: isFormValid ? 'pointer' : 'not-allowed',
                 }}
               >
-                Login
+                {loading ? 'Logging in...' : 'Login'}
               </button>
               {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error.message}</div>}
             </form>

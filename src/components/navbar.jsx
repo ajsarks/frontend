@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Ensure useNavigate is imported
+import { Link, useNavigate } from 'react-router-dom';
 import './navbar.css';
 import { Button } from './button';
 import { AuthContext } from '../context/auth';
@@ -10,7 +10,7 @@ function Navbar() {
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
     const [button, setButton] = useState(true);
-    const { email, dispatch } = useContext(AuthContext); // Access the email and dispatch from AuthContext
+    const { user, dispatch } = useContext(AuthContext); // Access the user and dispatch from AuthContext
     const navigate = useNavigate(); // Initialize useNavigate
 
     const handleLogout = () => {
@@ -43,7 +43,7 @@ function Navbar() {
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                    {email ? (
+                    {user ? ( // Check if user is logged in
                         <>
                             <li className='nav-item'>
                                 <Link to='/my-bookings' className="nav-links" onClick={closeMobileMenu}>
@@ -73,7 +73,7 @@ function Navbar() {
                 </ul>
                 {button && (
                     <div className="navbar-buttons">
-                        {email ? (
+                        {user ? ( // Check if user is logged in
                             <>
                                 <Link to='/my-bookings' className="nav-links">
                                     <FaUser className="user-icon" />
