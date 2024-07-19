@@ -3,6 +3,8 @@ import Navbar from '../navbar';
 import Sidebar from '../sidebar/sidebar';
 import axios from 'axios';
 import { AuthContext } from "../../context/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import './mybooking.css'; // Ensure this path is correct
 
 const apiurl = process.env.REACT_APP_API_URL;
@@ -14,7 +16,7 @@ function MyBookings() {
   useEffect(() => {
     if (!user) return; // Ensure user is available
 
-    axios.get(`${apiurl}/api/booking/user/${user._id}`)
+    axios.get(`${apiurl}/api/booking/user/${user}`)
       .then(response => {
         setBookings(response.data);
       })
@@ -44,7 +46,7 @@ function MyBookings() {
             <h2>Upcoming Bookings</h2>
             {upcomingBookings.length > 0 ? (
               upcomingBookings.map(booking => (
-                <BookingCard key={booking._id} booking={booking} />
+                <BookingCard key={booking._id} booking={booking} setBookings={setBookings} />
               ))
             ) : (
               <p>No upcoming bookings</p>
@@ -52,7 +54,7 @@ function MyBookings() {
             <h2>Past Bookings</h2>
             {pastBookings.length > 0 ? (
               pastBookings.map(booking => (
-                <BookingCard key={booking._id} booking={booking} />
+                <BookingCard key={booking._id} booking={booking} setBookings={setBookings} />
               ))
             ) : (
               <p>No past bookings</p>
@@ -64,7 +66,7 @@ function MyBookings() {
   );
 }
 
-function BookingCard({ booking }) {
+function BookingCard({ booking, setBookings }) {
   const [classInfo, setClassInfo] = useState(null);
 
   useEffect(() => {
@@ -77,9 +79,38 @@ function BookingCard({ booking }) {
       });
   }, [booking.classid]);
 
+  const handleCancel = () => {
+    axios.put(`${apiurl}/api/booking/cancel/${booking._id}`)
+      .then(response => {
+        // Update the bookings state to remove the canceled booking
+        setBookings(prevBookings => prevBookings.filter(b => b._id !== booking._id));
+      })
+      .catch(error => {
+        console.error('There was an error canceling the booking!', error.message, error.response ? error.response.data : null);
+      });
+  };
+
   if (!classInfo) {
     return <div>Loading...</div>;
   }
+
+  const getStatusIcon = (status) => {
+    let color;
+    switch (status) {
+      case 'pending':
+        color = 'orange';
+        break;
+      case 'confirmed':
+        color = 'green';
+        break;
+      case 'cancelled':
+        color = 'red';
+        break;
+      default:
+        color = 'gray';
+    }
+    return <FontAwesomeIcon icon={faCircle} style={{ color }} title={status} className="status-icon" />;
+  };
 
   return (
     <div className="booking-card">
@@ -97,10 +128,10 @@ function BookingCard({ booking }) {
         <p>Location: {booking.location}</p>
         <p>Date: {new Date(booking.date[0]).toLocaleDateString()} - {new Date(booking.date[1]).toLocaleDateString()}</p>
         <p>Time: {booking.time}</p>
-        <p>Confirmed: {booking.isconfirmed ? "Yes" : "No"}</p>
+        <p>Status: {getStatusIcon(booking.status)}</p>
         <p>Additional Comments: {booking.additionalcomments}</p>
         <div className="booking-actions">
-          <button className="cancel-button">Cancel Booking Request</button>
+          <button className="cancel-button" onClick={handleCancel}>Cancel Booking Request</button>
           <button className="contact-button">Contact Owner</button>
           <button className="edit-button">Edit Booking</button>
         </div>

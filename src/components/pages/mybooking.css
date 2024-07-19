@@ -62,7 +62,7 @@
     margin-top: 20px;
   }
   
-  .cancel-button, .contact-button {
+  .cancel-button, .contact-button, .edit-button {
     background-color: #e74c3c;
     color: #fff;
     border: none;
@@ -75,3 +75,6 @@
     background-color: #2ecc71;
   }
   
+  .edit-button {
+    background-color: #3498db; /* Blue color for edit button */
+  }
