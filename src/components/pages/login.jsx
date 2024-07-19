@@ -13,7 +13,7 @@ const Login = () => {
   });
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const { loading, error, dispatch, email } = useContext(AuthContext);
+  const { loading, error, dispatch, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,7 +26,7 @@ const Login = () => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(`${apiurl}/api/auth/login`, credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details.email });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
     } catch (err) {
       const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
       dispatch({ type: "LOGIN_FAILURE", payload: { message: errorMessage } });
