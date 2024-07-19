@@ -24,7 +24,7 @@ const Hotel = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const { data, loading, error } = useFetch(`${apiurl}/api/classes/${classid}`);
-  const { email } = useContext(AuthContext);  // Just use email from AuthContext
+  const { user } = useContext(AuthContext);  // Extract user from AuthContext
 
   const photos = data.photos ? data.photos.slice(0, 5) : [];
 
@@ -46,8 +46,8 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
-    if (email) {
-      navigate('/reserve', { state: { classid, user } });  // Pass email as user
+    if (user) {
+      navigate('/reserve', { state: { classid, user } });  // Pass user object
     } else {
       navigate("/login", { state: { from: location } });
     }

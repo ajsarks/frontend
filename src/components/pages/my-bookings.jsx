@@ -14,7 +14,6 @@ function MyBookings() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    if (!user) return; // Ensure user is available
 
     axios.get(`${apiurl}/api/booking/user/${user._id}`)
       .then(response => {
