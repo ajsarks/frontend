@@ -79,7 +79,7 @@ function BookingCard({ booking, setBookings }) {
   }, [booking.classid]);
 
   const handleCancel = () => {
-    axios.put(`${apiurl}/api/booking/cancel/${booking._id}`)
+    axios.put(`http://localhost:8000/api/booking/cancel/${booking._id}`)
       .then(response => {
         // Update the bookings state to remove the canceled booking
         setBookings(prevBookings => prevBookings.filter(b => b._id !== booking._id));
