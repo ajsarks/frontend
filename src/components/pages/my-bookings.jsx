@@ -8,20 +8,20 @@ import './mybooking.css'; // Ensure this path is correct
 const apiurl = process.env.REACT_APP_API_URL;
 
 function MyBookings() {
-  const { email } = useContext(AuthContext);  // Use email from AuthContext
+  const { email: user } = useContext(AuthContext);  // Extract email and rename to user
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    if (!email) return; // Ensure email is available
+    if (!user) return; // Ensure user is available
 
-    axios.get(`${apiurl}/api/booking/user/${email}`)
+    axios.get(`${apiurl}/api/booking/user/${user._id}`)
       .then(response => {
         setBookings(response.data);
       })
       .catch(error => {
         console.error('There was an error fetching the bookings!', error.message, error.response ? error.response.data : null);
       });
-  }, [email]);
+  }, [user]);
 
   const currentDate = new Date();
 
