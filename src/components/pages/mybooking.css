@@ -1,80 +1,81 @@
 .my-bookings-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .main-container {
-    display: flex;
-    flex: 1;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 200px; /* Adjust based on your sidebar width */
-  }
-  
-  .bookings-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    margin-top: 20px;
-  }
-  
-  .booking-card {
-    display: flex;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .booking-image img {
-    width: 150px;
-    height: 150px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  
-  .booking-details {
-    flex: 1;
-    margin-left: 20px;
-  }
-  
-  .booking-details h2 {
-    margin-top: 0;
-  }
-  
-  .booking-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .cancel-button, .contact-button, .edit-button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .contact-button {
-    background-color: #2ecc71;
-  }
-  
-  .edit-button {
-    background-color: #3498db; /* Blue color for edit button */
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 200px; /* Adjust based on your sidebar width */
+}
+
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.booking-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.booking-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.booking-details {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.booking-details h2 {
+  margin-top: 0;
+}
+
+.booking-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-button, .contact-button, .edit-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.contact-button {
+  background-color: #2ecc71;
+}
+
+.edit-button {
+  background-color: #3498db; /* Blue color for edit button */
+}
