@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useCallback } from "react";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -45,6 +45,21 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
+
+  useEffect(() => {
+    let logoutTimer;
+    if (state.user) {
+      logoutTimer = setTimeout(() => {
+        dispatch({ type: "LOGOUT" });
+      }, 3600000); // 1 hour in milliseconds
+    }
+
+    return () => {
+      if (logoutTimer) {
+        clearTimeout(logoutTimer);
+      }
+    };
+  }, [state.user, dispatch]);
 
   return (
     <AuthContext.Provider

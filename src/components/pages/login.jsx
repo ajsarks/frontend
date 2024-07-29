@@ -25,8 +25,15 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post(`${apiurl}/api/auth/login`, credentials);
+      const res = await axios.post(`${apiurl}/api/auth/login`, credentials, {
+        withCredentials: true // Ensure cookies are included in requests
+      });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      setLoginSuccess(true);
+      const from = location.state?.from?.pathname || "/";
+      setTimeout(() => {
+        navigate(from);
+      }, 1000);
     } catch (err) {
       const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
       dispatch({ type: "LOGIN_FAILURE", payload: { message: errorMessage } });
@@ -41,9 +48,8 @@ const Login = () => {
     if (user) {
       setLoginSuccess(true);
       const from = location.state?.from?.pathname || "/";
-      const redirectTo = from === "/register" ? "/" : from; // Redirect to home if coming from register
       setTimeout(() => {
-        navigate(redirectTo);
+        navigate(from);
       }, 1000);
     }
   }, [user, navigate, location.state]);

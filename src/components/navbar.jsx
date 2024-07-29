@@ -12,11 +12,12 @@ function Navbar() {
     const [button, setButton] = useState(true);
     const { user, dispatch } = useContext(AuthContext); // Access the user and dispatch from AuthContext
     const navigate = useNavigate(); // Initialize useNavigate
-
     const handleLogout = () => {
-        dispatch({ type: 'LOGOUT' });
         closeMobileMenu();
-        navigate('/'); // Navigate to home on logout
+        navigate('/'); // Navigate to home first
+        setTimeout(() => {
+            dispatch({ type: 'LOGOUT' }); // Dispatch logout action after navigation
+        }, 0); // Set a timeout to ensure navigation happens first
     };
 
     useEffect(() => {

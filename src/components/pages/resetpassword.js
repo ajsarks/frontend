@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from "../navbar";  // Adjust the import path as necessary
-
+const apiurl = process.env.REACT_APP_API_URL
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,7 +18,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post(`/api/auth/reset-password/${token}`, { newPassword });
+      const response = await axios.post(`${apiurl}/api/auth/reset-password/${token}`, { newPassword });
       setMessage('Password reset successful');
       setTimeout(() => {
         navigate('/login');

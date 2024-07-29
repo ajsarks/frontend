@@ -14,6 +14,7 @@ import ReservePage from './components/pages/reserve';
 import ReviewPage from './components/pages/reviewselections';
 import MyBookings from './components/pages/my-bookings';
 import MyAccount from './components/pages/myaccount';
+import EditBooking from './components/pages/edit-booking'; // Ensure the component name is capitalized
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path='/review' element={<ReviewPage />} />
             <Route path='/my-bookings' element={<MyBookings />} /> {/* Added route */}
             <Route path='/my-account' element={<MyAccount />} /> {/* Added route */}
+            <Route path='/edit-booking/:id' element={<EditBooking />} /> {/* Fixed route */}
           </Routes>
         </div>
       </Router>
