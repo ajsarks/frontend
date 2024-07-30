@@ -91,8 +91,9 @@ const ReviewPage = () => {
 const styles = {
   container: {
     width: '90%',
-    margin: '40px auto',
-    padding: '30px',
+    maxWidth: '600px',
+    margin: '20px auto',
+    padding: '20px',
     backgroundColor: '#fff',
     borderRadius: '10px',
     boxShadow: '0 0 15px rgba(0, 0, 0, 0.2)',
@@ -110,16 +111,20 @@ const styles = {
   buttons: {
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
     marginTop: '20px',
   },
   button: {
+    flex: '1 1 48%',
+    margin: '10px 1%',
     padding: '12px 24px',
-    backgroundColor: '#A27707', // Gold background to match the theme
-    color: '#fff', // White text for contrast
+    backgroundColor: '#A27707',
+    color: '#fff',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '16px',
+    textAlign: 'center',
   },
   error: {
     color: 'red',
