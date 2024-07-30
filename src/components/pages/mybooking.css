@@ -13,39 +13,82 @@
 
 .button-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.cancel-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.contact-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
+.cancel-button,
+.contact-button,
 .edit-button {
-  background-color: #007bff;
+  background-color: #A27707;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
+  flex: 1;
+  text-align: center;
+  min-width: 100px;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cancel-button:hover,
 .contact-button:hover,
 .edit-button:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .booking-card {
+    flex-direction: column;
+  }
+
+  .booking-image {
+    width: 100% !important;
+    max-width: 300px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .booking-details {
+    padding-left: 0;
+  }
+
+  .button-group {
+    justify-content: space-between;
+  }
+
+  .cancel-button,
+  .contact-button,
+  .edit-button {
+    padding: 8px 5px;
+    font-size: 12px;
+    flex: 1 1 calc(33.333% - 7px);
+    max-width: calc(33.333% - 7px);
+    white-space: normal;
+    height: auto;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.booking-card {
+  display: flex;
+  align-items: flex-start;
+}
+
+.booking-image {
+  flex: 1 1 30%;
+  max-width: 300px;
+}
+
+.booking-details {
+  flex: 1 1 70%;
+  padding-left: 16px;
 }

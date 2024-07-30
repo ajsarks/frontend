@@ -50,17 +50,21 @@ function MyBookings() {
 
   const currentDate = new Date();
 
-  const upcomingBookings = bookings.filter(booking =>
+  const sortBookingsByDate = (bookings) => {
+    return bookings.sort((a, b) => new Date(a.date[0]) - new Date(b.date[0]));
+  };
+
+  const upcomingBookings = sortBookingsByDate(bookings.filter(booking =>
     new Date(booking.date[0]) >= currentDate && booking.status !== 'cancelled'
-  );
+  ));
 
-  const pastBookings = bookings.filter(booking =>
+  const pastBookings = sortBookingsByDate(bookings.filter(booking =>
     new Date(booking.date[1]) < currentDate && booking.status !== 'cancelled'
-  );
+  )).reverse(); // Reverse to show most recent past bookings first
 
-  const cancelledBookings = bookings.filter(booking =>
+  const cancelledBookings = sortBookingsByDate(bookings.filter(booking =>
     booking.status === 'cancelled'
-  );
+  ));
 
   return (
     <div className="my-bookings-container">
