@@ -11,7 +11,7 @@ const ClassList = () => {
 
   return (
     <div className="pList">
-      <div className="pListItem" onClick={() => handleItemClick("introductory-coding")}>
+      <div className="pListItem" onClick={() => handleItemClick("Introductory")}>
         <div className="pListLink">
           <img
             src="https://images.pexels.com/photos/5212697/pexels-photo-5212697.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -24,7 +24,7 @@ const ClassList = () => {
           </div>
         </div>
       </div>
-      <div className="pListItem" onClick={() => handleItemClick("advanced-coding")}>
+      <div className="pListItem" onClick={() => handleItemClick("Advanced Coding")}>
         <div className="pListLink">
           <img
             src="https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg"
@@ -37,7 +37,7 @@ const ClassList = () => {
           </div>
         </div>
       </div>
-      <div className="pListItem" onClick={() => handleItemClick("web-development")}>
+      <div className="pListItem" onClick={() => handleItemClick("Web Development")}>
         <div className="pListLink">
           <img
             src="https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -50,7 +50,7 @@ const ClassList = () => {
           </div>
         </div>
       </div>
-      <div className="pListItem" onClick={() => handleItemClick("data-science")}>
+      <div className="pListItem" onClick={() => handleItemClick("Data Science")}>
         <div className="pListLink">
           <img
             src="https://media.istockphoto.com/id/1407983911/photo/forex-diagrams-and-stock-market-rising-lines-with-numbers.jpg?b=1&s=612x612&w=0&k=20&c=NfDCd-FXO3yCvcnNa0u4qCcgUQWNtWooBfs_Onwoj9g="
