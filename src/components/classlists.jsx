@@ -63,7 +63,7 @@ const ClassList = () => {
           </div>
         </div>
       </div>
-      <div className="pListItem" onClick={() => handleItemClick("game-development")}>
+      <div className="pListItem" onClick={() => handleItemClick("Game Development")}>
         <div className="pListLink">
           <img
             src="https://media.istockphoto.com/id/1297107315/photo/gamification-and-game-development-concept-in-neon-style.jpg?b=1&s=612x612&w=0&k=20&c=ZqnWTLdoLY7QSCRw-D30JUd4BI7NsoIhrILrCOIRVio="
