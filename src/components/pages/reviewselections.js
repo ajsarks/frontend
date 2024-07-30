@@ -11,14 +11,14 @@ const ReviewPage = () => {
   const reservationData = location.state;
   const [error, setError] = useState('');
   const [className, setClassName] = useState('');
-  const [classSetting, setClassSetting] = useState(''); // New state for class setting
+  const [classSetting, setClassSetting] = useState('');
 
   useEffect(() => {
     const fetchClassDetails = async () => {
       try {
         const response = await axios.get(`${apiurl}/api/classes/${reservationData.classid}`);
         setClassName(response.data.name);
-        setClassSetting(response.data.setting); // Fetch and set class setting
+        setClassSetting(response.data.setting);
       } catch (err) {
         console.error('Error fetching class details:', err);
         setError('Error fetching class details. Please try again.');
@@ -28,7 +28,7 @@ const ReviewPage = () => {
     if (reservationData.classsetting) {
       fetchClassDetails();
     }
-  }, [reservationData.classsetting]);
+  }, [reservationData.classsetting, reservationData.classid]);
 
   const handleSubmit = async () => {
     try {
@@ -43,7 +43,17 @@ const ReviewPage = () => {
   };
 
   const handleEdit = () => {
-    navigate('/reserve', { state: reservationData });
+    navigate('/reserve', { 
+      state: {
+        ...reservationData,
+        user: {
+          _id: reservationData.userId,
+          name: reservationData.name,
+          email: reservationData.email
+        },
+        date: reservationData.date.map(dateString => new Date(dateString))
+      }
+    });
   };
 
   return (
