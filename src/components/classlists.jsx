@@ -11,7 +11,7 @@ const ClassList = () => {
 
   return (
     <div className="pList">
-      <div className="pListItem" onClick={() => handleItemClick("Introductory")}>
+      <div className="pListItem" onClick={() => handleItemClick("Introductory Coding")}>
         <div className="pListLink">
           <img
             src="https://images.pexels.com/photos/5212697/pexels-photo-5212697.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
