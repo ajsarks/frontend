@@ -17,7 +17,7 @@ const FeaturedClasses = () => {
         </a>
       </div>
       <div className="featuredItem">
-        <a href="https://booking.codepulse.ca/classes/66a97fe7867585725aa46492">
+        <a href="https://booking.codepulse.ca/classes/66a99323252c1fc59791a749">
           <img
             src="fundemental.png"
             alt="Coding Fundamentals"
