@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 
 const GoogleAuthSuccess = () => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     try {
@@ -13,15 +14,16 @@ const GoogleAuthSuccess = () => {
 
       if (user) {
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-        navigate('/');
+        const from = location.state?.from?.pathname || "/";
+        navigate(from);
       } else {
         navigate('/login');
       }
     } catch (error) {
       console.error('Error during Google Auth Success:', error);
-      navigate('https://frontend-chi-swart-59.vercel.app/login');
+      navigate('/login');
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, location.state]);
 
   return <div>Google Auth Success</div>;
 };
