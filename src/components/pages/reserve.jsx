@@ -82,6 +82,15 @@ const ReservationPage = () => {
     });
   };
 
+  const handlePhoneChange = (e) => {
+    const input = e.target.value;
+    // Remove all non-digit characters
+    const cleaned = input.replace(/\D/g, '');
+    // Format the number as (XXX) XXX-XXXX
+    const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+    setPhoneNumber(formatted.slice(0, 14)); // Limit to 14 characters (including formatting)
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -102,7 +111,15 @@ const ReservationPage = () => {
         </label>
         <label>
           Phone Number:
-          <input type="tel" value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} style={styles.input} required />
+          <input
+            type="tel"
+            value={phonenumber}
+            onChange={handlePhoneChange}
+            style={styles.input}
+            placeholder="(123) 456-7890"
+            pattern="\(\d{3}\)\s\d{3}-\d{4}"
+            required
+          />
         </label>
         <label>
           Class Setting:

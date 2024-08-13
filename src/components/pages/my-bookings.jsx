@@ -39,7 +39,7 @@ function MyBookings() {
       return;
     }
 
-    axios.get(`${apiurl}/api/booking/user/${user._id}`)
+    axios.get(`${apiurl}/api/booking/user/${user._id}`, { withCredentials: true })
       .then(response => {
         setBookings(response.data);
       })
@@ -101,7 +101,7 @@ function BookingCard({ booking, setBookings }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${apiurl}/api/classes/${booking.classid}`)
+    axios.get(`${apiurl}/api/classes/${booking.classid}`, { withCredentials: true })
       .then(response => {
         setClassInfo(response.data);
       })

@@ -17,7 +17,14 @@ const Header = ({ type, showSearchBar = true }) => {
     const handleSearch = () => {
         if (searchTerm && selectedDates.length > 0) {
             if (dispatch) {
-                dispatch({ type: "NEW_SEARCH", payload: { city: searchTerm, dates: selectedDates } }); // Update context
+                dispatch({ 
+                    type: "NEW_SEARCH", 
+                    payload: { 
+                        city: searchTerm, 
+                        dates: selectedDates,
+                        isLoading: true 
+                    } 
+                });
                 navigate("/classes");
             } else {
                 console.error('Dispatch function is not available');

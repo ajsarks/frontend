@@ -35,7 +35,7 @@ const Login = () => {
         navigate(from);
       }, 1000);
     } catch (err) {
-      const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+      const errorMessage = err.response?.data?.error || "An error occurred. Please try again.";
       dispatch({ type: "LOGIN_FAILURE", payload: { message: errorMessage } });
     }
   };
@@ -160,7 +160,11 @@ const Login = () => {
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
-              {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error.message}</div>}
+              {error && (
+                <div style={{ color: 'red', marginBottom: '1rem' }}>
+                  {error.message}
+                </div>
+              )}
             </form>
           )}
           <button style={googleButtonStyles} onClick={handleGoogleSignIn}>

@@ -1,32 +1,45 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
-// Create an axios instance with default configurations
 const axiosInstance = axios.create({
-  withCredentials: true, // This ensures all requests include credentials
+  withCredentials: true,
 });
 
-const useFetch = (url) => {
-    const [data, setData] = useState([]);
+const useFetch = (url, defaultValue = null, errorHandler = null) => {
+    const [data, setData] = useState(defaultValue);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
-        setError(null); // Reset error state before making a new request
+        setError(null);
         try {
             const res = await axiosInstance.get(url);
-            setData(res.data);
+            const fetchedData = res.data || defaultValue;
+
+            // Check each field in the data and set it to an empty string if it's null or undefined
+            const cleanData = Object.keys(fetchedData).reduce((acc, key) => {
+                acc[key] = fetchedData[key] ?? "";
+                return acc;
+            }, {});
+
+            setData(cleanData);
         } catch (err) {
-            setError(err);
+            if (errorHandler && errorHandler(err)) {
+                setData(defaultValue);
+            } else {
+                setError(err);
+            }
         } finally {
-            setLoading(false); // Ensure loading is set to false in both success and error cases
+            setLoading(false);
         }
-    }, [url]);
+    }, [url, errorHandler, defaultValue]);
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if (url) {
+            fetchData();
+        }
+    }, [fetchData, url]);
 
     return { data, loading, error, reFetch: fetchData };
 };

@@ -10,13 +10,15 @@ const Register = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-    confirmPassword: "", // Added confirmPassword field
+    confirmPassword: "",
     name: "",
   });
-  const [registerSuccess, setRegisterSuccess] = useState(false); // State to manage register success message
-  const [isGoogleSignUp, setIsGoogleSignUp] = useState(false); // State to manage Google sign-up
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [isGoogleSignUp, setIsGoogleSignUp] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [verificationMessage, setVerificationMessage] = useState(""); // Added this line
 
-  const { loading, error, dispatch } = useContext(AuthContext);
+  const { loading, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,34 +28,41 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
     if (credentials.password !== credentials.confirmPassword) {
-      dispatch({ type: "REGISTER_FAILURE", payload: { message: "Passwords do not match" } });
+      setErrorMessage("Passwords do not match");
       return;
     }
-    dispatch({ type: "REGISTER_START" }); 
+    if (credentials.password.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(credentials.password)) {
+      setErrorMessage("Password must be at least 8 characters long and contain a special character");
+      return;
+    }
+    dispatch({ type: "REGISTER_START" });
     try {
       const res = await axios.post(`${apiurl}/api/auth/register`, credentials);
       dispatch({ type: "REGISTER_SUCCESS", payload: res.data.details });
-      setRegisterSuccess(true); // Set registerSuccess to true
+      setRegisterSuccess(true);
+      setVerificationMessage("Registration successful! Please check your email inbox to verify your account.");
     } catch (err) {
-      const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+      const errorMessage = err.response?.data?.error || "An error occurred. Please try again.";
+      setErrorMessage(errorMessage);
       dispatch({ type: "REGISTER_FAILURE", payload: { message: errorMessage } });
     }
   };
 
   const handleGoogleSignUp = () => {
-    setIsGoogleSignUp(true); // Set isGoogleSignUp to true
-    window.location.href = `${apiurl}/api/auth/google`; // Ensure this points to your backend
+    setIsGoogleSignUp(true);
+    window.location.href = `${apiurl}/api/auth/google`;
   };
 
   useEffect(() => {
     if (registerSuccess) {
       setTimeout(() => {
-        navigate("/login"); // Redirect to login after 1 second
+        navigate("/login");
       }, 1000);
     } else if (isGoogleSignUp) {
       setTimeout(() => {
-        navigate("/"); // Redirect to home after 1 second
+        navigate("/");
       }, 1000);
     }
   }, [registerSuccess, isGoogleSignUp, navigate]);
@@ -109,7 +118,7 @@ const Register = () => {
         }}>
           <h2>Register</h2>
           {registerSuccess ? (
-            <div style={{ color: 'green', marginBottom: '1rem' }}>Sign up successful! Redirecting to login...</div>
+            <div style={{ color: 'green', marginBottom: '1rem' }}>{verificationMessage}</div>
           ) : isGoogleSignUp ? (
             <div style={{ color: 'green', marginBottom: '1rem' }}>Sign up successful! Redirecting to home...</div>
           ) : (
@@ -198,9 +207,9 @@ const Register = () => {
                   cursor: isFormValid ? 'pointer' : 'not-allowed',
                 }}
               >
-                Register
+                {loading ? 'Registering...' : 'Register'}
               </button>
-              {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error.message}</div>}
+              {errorMessage && <div style={{ color: 'red', marginBottom: '1rem' }}>{errorMessage}</div>}
             </form>
           )}
           <button style={googleButtonStyles} onClick={handleGoogleSignUp}>

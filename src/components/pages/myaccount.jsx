@@ -1,49 +1,52 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../navbar";
-import Sidebar from "../sidebar/sidebar"; // Assuming you have a Sidebar component
+import Sidebar from "../sidebar/sidebar";
 import { AuthContext } from "../../context/auth";
+import useFetch from "../../hooks/useFetch"; // Import the useFetch hook
 
 const apiurl = process.env.REACT_APP_API_URL;
 
 const AccountDetails = () => {
-  const [userDetails, setUserDetails] = useState({
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Use the useFetch hook to fetch user details
+  const { data: userDetails, loading, error: fetchError, reFetch } = useFetch(
+    user ? `${apiurl}/api/users/${user._id}` : null
+  );
+
+  const [formData, setFormData] = useState({
     email: "",
     name: "",
     password: "",
     confirmPassword: "",
-    googleId: null,
   });
-  const { user } = useContext(AuthContext); // Assuming AuthContext provides the user
-  const [isLoading, setIsLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/"); // Redirect to home if user is null
-      return;
+  // Update formData when userDetails are fetched
+  React.useEffect(() => {
+    if (userDetails) {
+      setFormData({
+        email: userDetails.email || "",
+        name: userDetails.name || "",
+        password: "",
+        confirmPassword: "",
+      });
     }
+  }, [userDetails]);
 
-    const fetchUserDetails = async () => {
-      try {
-        const res = await axios.get(`${apiurl}/api/users/${user._id}`);
-        setUserDetails(res.data);
-        setIsLoading(false);
-      } catch (err) {
-        setError("Failed to fetch user details");
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserDetails();
+  React.useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
   }, [user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserDetails((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEdit = () => {
@@ -52,22 +55,31 @@ const AccountDetails = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (userDetails.password !== userDetails.confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
     try {
-      await axios.put(`${apiurl}/api/users/${user._id}`, userDetails, {
-        withCredentials: true, // Include cookies in the request
+      await axios.put(`${apiurl}/api/users/${user._id}`, formData, {
+        withCredentials: true,
       });
       setIsEditing(false);
+      reFetch(); // Refetch user details after update
     } catch (err) {
       setError("Failed to update user details");
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (fetchError) {
+    return <div>Error: {fetchError.message}</div>;
+  }
+
+  if (!userDetails) {
+    return <div>No user details available</div>;
   }
 
   return (
@@ -97,24 +109,24 @@ const AccountDetails = () => {
             style={{
               display: "flex",
               flexDirection: "column",
-              padding: "4rem", // Increased padding
+              padding: "4rem",
               border: "2px solid #A27707",
               borderRadius: "10px",
               backgroundColor: "#FFFFFF",
               color: "#A27707",
               width: "60%",
-              marginBottom: "2rem", // Increased margin-bottom
+              marginBottom: "2rem",
             }}
             onSubmit={handleSave}
           >
             <label
               htmlFor="name"
-              style={{ textAlign: "left", padding: "1rem 0" }} // Increased padding
+              style={{ textAlign: "left", padding: "1rem 0" }}
             >
               Name
             </label>
             <input
-              value={userDetails.name}
+              value={formData.name}
               onChange={handleChange}
               type="text"
               placeholder="Your Name"
@@ -122,8 +134,8 @@ const AccountDetails = () => {
               name="name"
               disabled={!isEditing}
               style={{
-                margin: "1rem 0", // Increased margin
-                padding: "1.5rem", // Increased padding
+                margin: "1rem 0",
+                padding: "1.5rem",
                 border: "2px solid #A27707",
                 borderRadius: "10px",
                 backgroundColor: isEditing ? "#FFFFFF" : "#E0E0E0",
@@ -133,12 +145,12 @@ const AccountDetails = () => {
             />
             <label
               htmlFor="email"
-              style={{ textAlign: "left", padding: "1rem 0" }} // Increased padding
+              style={{ textAlign: "left", padding: "1rem 0" }}
             >
               Email
             </label>
             <input
-              value={userDetails.email}
+              value={formData.email}
               onChange={handleChange}
               type="email"
               placeholder="youremail@gmail.com"
@@ -146,8 +158,8 @@ const AccountDetails = () => {
               name="email"
               disabled={!isEditing}
               style={{
-                margin: "1rem 0", // Increased margin
-                padding: "1.5rem", // Increased padding
+                margin: "1rem 0",
+                padding: "1.5rem",
                 border: "2px solid #A27707",
                 borderRadius: "10px",
                 backgroundColor: isEditing ? "#FFFFFF" : "#E0E0E0",
@@ -155,7 +167,7 @@ const AccountDetails = () => {
                 fontSize: "1rem",
               }}
             />
-            {userDetails.googleId ? (
+            {userDetails && userDetails.googleId ? (
               <div style={{ margin: "1rem 0", color: "#A27707" }}>
                 Go to your Google account to change details
               </div>
@@ -163,12 +175,12 @@ const AccountDetails = () => {
               <>
                 <label
                   htmlFor="password"
-                  style={{ textAlign: "left", padding: "1rem 0" }} // Increased padding
+                  style={{ textAlign: "left", padding: "1rem 0" }}
                 >
                   Password
                 </label>
                 <input
-                  value={userDetails.password}
+                  value={formData.password}
                   onChange={handleChange}
                   type="password"
                   placeholder="********"
@@ -176,8 +188,8 @@ const AccountDetails = () => {
                   name="password"
                   disabled={!isEditing}
                   style={{
-                    margin: "1rem 0", // Increased margin
-                    padding: "1.5rem", // Increased padding
+                    margin: "1rem 0",
+                    padding: "1.5rem",
                     border: "2px solid #A27707",
                     borderRadius: "10px",
                     backgroundColor: isEditing ? "#FFFFFF" : "#E0E0E0",
@@ -189,20 +201,20 @@ const AccountDetails = () => {
                   <>
                     <label
                       htmlFor="confirmPassword"
-                      style={{ textAlign: "left", padding: "1rem 0" }} // Increased padding
+                      style={{ textAlign: "left", padding: "1rem 0" }}
                     >
                       Confirm Password
                     </label>
                     <input
-                      value={userDetails.confirmPassword}
+                      value={formData.confirmPassword}
                       onChange={handleChange}
                       type="password"
                       placeholder="********"
                       id="confirmPassword"
                       name="confirmPassword"
                       style={{
-                        margin: "1rem 0", // Increased margin
-                        padding: "1.5rem", // Increased padding
+                        margin: "1rem 0",
+                        padding: "1.5rem",
                         border: "2px solid #A27707",
                         borderRadius: "10px",
                         backgroundColor: "#FFFFFF",
@@ -219,7 +231,7 @@ const AccountDetails = () => {
                 type="submit"
                 style={{
                   margin: "1rem 0",
-                  padding: "1.5rem", // Increased padding
+                  padding: "1.5rem",
                   border: "none",
                   borderRadius: "10px",
                   backgroundColor: "#A27707",
@@ -238,7 +250,7 @@ const AccountDetails = () => {
               onClick={handleEdit}
               style={{
                 margin: "1rem 0",
-                padding: "1.5rem", // Increased padding
+                padding: "1.5rem",
                 border: "none",
                 borderRadius: "10px",
                 backgroundColor: "#A27707",

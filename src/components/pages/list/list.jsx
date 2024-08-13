@@ -6,7 +6,7 @@ import "react-multi-date-picker/styles/colors/green.css";
 import Navbar from "../../navbar";
 import Header from "../../Header";
 import SearchItem from "../../searchItem";
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../hooks/usefetch2.0";
 import { SearchContext } from "../../../context/search";
 import { useLocation } from "react-router-dom";
 import "./list.css";
@@ -35,6 +35,20 @@ const List = () => {
     }, [location.search, destination]);
 
     const { data, loading, error, reFetch } = useFetch(query);
+
+    const [showNoResults, setShowNoResults] = useState(false);
+
+    useEffect(() => {
+        let timer;
+        if (!loading && Array.isArray(data) && data.length === 0) {
+            timer = setTimeout(() => {
+                setShowNoResults(true);
+            }, 2000);
+        } else {
+            setShowNoResults(false);
+        }
+        return () => clearTimeout(timer);
+    }, [loading, data]);
 
     const handleSearch = () => {
         setIsSearchClicked(true);
@@ -96,19 +110,23 @@ const List = () => {
                         {loading ? "Loading..." : (
                             <>
                                 {Array.isArray(data) && data.length === 0 ? (
-                                    <p>No results found</p>
+                                    showNoResults ? (
+                                        <p>No results found</p>
+                                    ) : (
+                                        "Loading..."
+                                    )
                                 ) : (
                                     Array.isArray(data) ? (
                                         data.map((item) => (
                                             <SearchItem item={item} key={item._id} />
                                         ))
                                     ) : (
-                                        <p>Unexpected data format</p>
+                                        <p>Loading...</p>
                                     )
                                 )}
                             </>
                         )}
-                        {error && <p>Error: {error.message}</p>}
+    
                     </div>
                 </div>
             </div>

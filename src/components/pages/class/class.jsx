@@ -2,7 +2,6 @@ import "./class.css";
 import Navbar from "../../navbar";
 import Header from "../../Header";
 import Footer from "../../footer";
-import useFetch from "../../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -12,9 +11,10 @@ import {
   faCalendarDays,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/auth";
+import axios from "axios";
 
 const apiurl = process.env.REACT_APP_API_URL;
 
@@ -25,8 +25,24 @@ const Class = () => {
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data, loading, error } = useFetch(`${apiurl}/api/classes/${classid}`);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiurl}/api/classes/${classid}`);
+        setData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [classid]);
 
   const photos = data.photos || [];
 
@@ -60,9 +76,9 @@ const Class = () => {
       <Navbar />
       <Header type="list" showSearchBar={false} />
       {loading ? (
-        "loading"
+        "Loading..."
       ) : error ? (
-        <div>Error: {error.message}</div>
+        <div>Error: {error}</div>
       ) : (
         <div className="classContainer">
           {open && (

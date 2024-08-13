@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../navbar';
+import useFetch from '../../hooks/useFetch'; // Import the useFetch hook
 
 const apiurl = process.env.REACT_APP_API_URL;
 
@@ -9,36 +10,25 @@ const ReviewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const reservationData = location.state;
-  const [error, setError] = useState('');
-  const [className, setClassName] = useState('');
-  const [classSetting, setClassSetting] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  useEffect(() => {
-    const fetchClassDetails = async () => {
-      try {
-        const response = await axios.get(`${apiurl}/api/classes/${reservationData.classid}`);
-        setClassName(response.data.name);
-        setClassSetting(response.data.setting);
-      } catch (err) {
-        console.error('Error fetching class details:', err);
-        setError('Error fetching class details. Please try again.');
-      }
-    };
-
-    if (reservationData.classsetting) {
-      fetchClassDetails();
-    }
-  }, [reservationData.classsetting, reservationData.classid]);
+  // Use the useFetch hook to fetch class details
+  const { data: classDetails, loading, error: fetchError } = useFetch(
+    reservationData.classid ? `${apiurl}/api/classes/${reservationData.classid}` : null
+  );
 
   const handleSubmit = async () => {
     try {
       await axios.post(`${apiurl}/api/booking`, reservationData);
-      alert('Reservation submitted successfully!');
-      navigate('/');
+      setSuccessMessage('Reservation submitted successfully!');
+      setTimeout(() => {
+        navigate('/');
+      }, 3000); // Redirect after 3 seconds
     } catch (error) {
       console.error('Error submitting reservation:', error);
-      const errorMessage = error.response?.data?.message || 'Your selected dates are unavailable. Please try again.';
-      setError(errorMessage);
+      const errorMessage = error.response?.data?.error || 'Your selected dates are unavailable. Please try again.';
+      setErrorMessage(errorMessage);
     }
   };
 
@@ -56,11 +46,16 @@ const ReviewPage = () => {
     });
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (fetchError) return <div>Error: {fetchError.message}</div>;
+
   return (
     <div>
       <Navbar />
       <div style={styles.container}>
         <h2 style={styles.title}>Review Your Reservation</h2>
+        {successMessage && <p style={styles.success}>{successMessage}</p>}
+        {errorMessage && <p style={styles.error}>{errorMessage}</p>}
         <div style={styles.reviewItem}>
           <strong>Name:</strong> {reservationData.name}
         </div>
@@ -71,10 +66,10 @@ const ReviewPage = () => {
           <strong>Phone Number:</strong> {reservationData.phonenumber}
         </div>
         <div style={styles.reviewItem}>
-          <strong>Class:</strong> {className || 'Loading...'}
+          <strong>Class:</strong> {classDetails?.name || 'N/A'}
         </div>
         <div style={styles.reviewItem}>
-          <strong>Class Setting:</strong> {reservationData.classsetting || 'Loading...'}
+          <strong>Class Setting:</strong> {reservationData.classsetting || 'N/A'}
         </div>
         <div style={styles.reviewItem}>
           <strong>Location:</strong> {reservationData.location}
@@ -88,7 +83,6 @@ const ReviewPage = () => {
         <div style={styles.reviewItem}>
           <strong>Comments:</strong> {reservationData.additionalcomments}
         </div>
-        {error && <p style={styles.error}>{error}</p>}
         <div style={styles.buttons}>
           <button onClick={handleSubmit} style={styles.button}>Submit</button>
           <button onClick={handleEdit} style={styles.button}>Edit</button>
@@ -139,6 +133,14 @@ const styles = {
   error: {
     color: 'red',
     marginTop: '20px',
+    marginBottom: '20px',
+    fontWeight: 'bold',
+  },
+  success: {
+    color: 'green',
+    marginTop: '20px',
+    marginBottom: '20px',
+    fontWeight: 'bold',
   },
 };
 

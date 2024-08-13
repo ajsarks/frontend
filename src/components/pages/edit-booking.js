@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import DatePicker from 'react-multi-date-picker';
 import 'react-multi-date-picker/styles/colors/green.css';
 import Navbar from '../navbar';
 import Sidebar from '../sidebar/sidebar';
 import { AuthContext } from '../../context/auth';
 import { SearchContext } from '../../context/search';
+import useFetch from '../../hooks/usefetch2.0';
 
 const apiurl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
@@ -23,42 +23,37 @@ const EditBooking = () => {
   const [classsetting, setClassSetting] = useState('School');
   const [selectedDates, setSelectedDates] = useState(contextDates || []);
   const [maxDates, setMaxDates] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [userData, setUserData] = useState({ name: '', email: '' });
   const [classId, setClassId] = useState('');
 
+  const { data: bookingData, loading, error: fetchError } = useFetch(`${apiurl}/api/booking/${id}`);
+  const { data: classData } = useFetch(classId ? `${apiurl}/api/classes/${classId}` : null);
+
   useEffect(() => {
-    const fetchBookingData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${apiurl}/api/booking/${id}`);
-        const bookingData = response.data;
+    if (bookingData) {
+      setLocationInput(bookingData.location);
+      setTime(bookingData.time);
+      setPhoneNumber(bookingData.phonenumber);
+      setComments(bookingData.additionalcomments);
+      setClassSetting(bookingData.classsetting);
+      setSelectedDates(bookingData.date.map(date => new Date(date)));
+      setClassId(bookingData.classid);
+      setUserData({ name: user.name, email: user.email });
+    }
+  }, [bookingData, user]);
 
-        setLocationInput(bookingData.location);
-        setTime(bookingData.time);
-        setPhoneNumber(bookingData.phonenumber);
-        setComments(bookingData.additionalcomments);
-        setClassSetting(bookingData.classsetting);
-        setSelectedDates(bookingData.date.map(date => new Date(date)));
-        setClassId(bookingData.classid);
+  useEffect(() => {
+    if (classData) {
+      setMaxDates(classData.daysrequired);
+    }
+  }, [classData]);
 
-        // Fetch class information to get maxDates
-        const classResponse = await axios.get(`${apiurl}/api/classes/${bookingData.classid}`);
-        setMaxDates(classResponse.data.daysrequired);
-
-        // Fetch user data
-        setUserData({ name: user.name, email: user.email });
-      } catch (error) {
-        console.error('Failed to fetch booking data:', error);
-        setError('Failed to fetch booking data.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBookingData();
-  }, [id, user]);
+  useEffect(() => {
+    if (fetchError) {
+      setError('Failed to fetch booking data.');
+    }
+  }, [fetchError]);
 
   const handleDateChange = (dates) => {
     if (dates.length <= maxDates) {
@@ -85,16 +80,27 @@ const EditBooking = () => {
     const formattedDates = selectedDates.map(date => formatDate(date));
 
     try {
-      await axios.put(`${apiurl}/api/booking/${id}`, {
-        location: locationInput,
-        time,
-        date: formattedDates,
-        phonenumber,
-        additionalcomments,
-        classsetting,
-        classid: classId,
-        userId: user._id,
-      }, { withCredentials: true });
+      const response = await fetch(`${apiurl}/api/booking/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          location: locationInput,
+          time,
+          date: formattedDates,
+          phonenumber,
+          additionalcomments,
+          classsetting,
+          classid: classId,
+          userId: user._id,
+        }),
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update booking');
+      }
 
       alert('Booking updated successfully');
       navigate('/my-bookings');
